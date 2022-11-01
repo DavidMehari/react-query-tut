@@ -1,16 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import './App.css';
-import HomePage from './components/Home.page';
+import { HomePage } from './components/Home.page';
 import { RQSuperHeroesPage } from './components/RQSuperHeroes.page';
 import { SuperHeroesPage } from './components/SuperHeroes.page';
+import { RQSuperHeroPage } from './components/RQSuperHero.page';
+import { ParallelQueriesPage } from './components/ParallelQueries.page';
+import { DynamicParallelQueriesPage } from './components/DynamicParallelQueries.page';
+import { DependentQueriesPage } from './components/DependentQueries.page';
+import { PaginatedQueriesPage } from './components/PaginatedQueries.page';
+import { InfiniteQueriesPage } from './components/InfiniteQueries.page';
 
 function App() {
-
-  const queryClient = new QueryClient(); 
+  const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient} >
+    <QueryClientProvider client={queryClient}>
       <Router>
         <div>
           <nav>
@@ -29,10 +35,17 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/super-heroes" element={<SuperHeroesPage />} />
+            <Route path="/rq-parallel" element={<ParallelQueriesPage />} />
+            <Route path="/rq-paginated" element={<PaginatedQueriesPage />} />
+            <Route path="/rq-infinite" element={<InfiniteQueriesPage />} />
+            <Route path="/rq-dependent" element={<DependentQueriesPage email='vishwas@example.com' />} />
+            <Route path="/rq-dynamic-parallel" element={<DynamicParallelQueriesPage heroIds={[1, 3]} />} />
             <Route path="/rq-super-heroes" element={<RQSuperHeroesPage />} />
+            <Route path="/rq-super-heroes/:heroId" element={<RQSuperHeroPage />} />
           </Routes>
         </div>
       </Router>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );
 }
